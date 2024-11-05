@@ -41,7 +41,284 @@ samples, guidance on mobile development, and a full API reference.
 
 <details>
   <summary>Step-by-Step on Implementations</summary>
+<br/>
+
+Preparation:
+---
+- Create a new Flutter project with the name e_commerce, then enter the project directory
+  ```
+  flutter create e_commerce
+  cd e_commerce
+  ```
+- To run the project:
+  ```
+  flutter run
+  ```
+---
+1. Create a new file name ```menu.dart``` in the ```e_commerce/lib``` directory. On the first line of the file, add the follwing code:
+```
+import 'package:flutter/material.dart';
+```
+
+2. From the ```main.dart``` file, cut the lines from line 39 to the end that contains the two classes below, and paste it to the file ```menu.dart``` created just prior to. 
+```
+class MyHomePage ... {
+    ...
+}
+
+class _MyHomePageState ... {
+    ...
+}
+```
+
+3. Add the following code at the beginning of the file in ```main.dart```
+```
+import 'package:e_commerce/menu.dart';
+```
+
+#### Create a Card with NPM, Name, and Class
+4. To create a card with NPM, Name, and Class in Flutter, it is essential to declare three variables of type strings containing the NPM, name and class in the ```class MyHomePage``` in the ```menu.dart``` file as shown below:
+```
+class MyHomePage extends StatelessWidget {
+    final String npm = '2306199743'; // NPM
+    final String name = 'Min Kim'; // Name
+    final String className = 'KKI'; // Class
+    ...
+}
+```
+
+5. After declaring the three variables, create a new class name ```InfoCard``` in the ```menu.dart``` file to create a simple card that displays the NPM, name, and class information.
+```
+...
+class InfoCard extends StatelessWidget {
+  // Card information that displays the title and content.
+
+  final String title;  // Card title.
+  final String content;  // Card content.
+
+  const InfoCard({super.key, required this.title, required this.content});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      // Create a card box with a shadow.
+      elevation: 2.0,
+      child: Container(
+        // Set the size and spacing within the card.
+        width: MediaQuery.of(context).size.width / 3.5, // Adjust with the width of the device used.
+        padding: const EdgeInsets.all(16.0),
+        // Place the title and content vertically.
+        child: Column(
+          children: [
+            Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8.0),
+            Text(content),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+#### Create a Button Card with Icon
+6. Create a new class named ```ItemHomepage``` that contains the attributes of the card. On the ```menu.dart``` file, put the code snippet given below outside of the ```MyHomePage``` and ```InfoCard``` class. Then create a list of ```ItemHomepage``` that contains the buttons you want to add to the ```MyHomePage``` class.
+```
+...
+ class ItemHomepage {
+     final String name;
+     final IconData icon;
+
+     ItemHomepage(this.name, this.icon);
+ }
+ ...
+```
+```
+class MyHomePage extends StatelessWidget {  
+     ...
+     final List<ItemHomepage> items = [
+         ItemHomepage("View Product List", Icons.mood),
+         ItemHomepage("Add Product", Icons.add),
+         ItemHomepage("Logout", Icons.logout),
+     ];
+     ...
+ }
+```
+
+7. After adding the buttons, create a ```ItemCard``` class to display the button on the home page of the application. When The button is pressed, it will display a snackbar message "You have pressed the [button name] button.".
+```
+...
+class ItemCard extends StatelessWidget {
+  // Display the card with an icon and name.
+
+  final ItemHomepage item; 
   
-1.
+  const ItemCard(this.item, {super.key}); 
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      // Specify the background color of the application theme.
+      color: Theme.of(context).colorScheme.secondary,
+      // Round the card border.
+      borderRadius: BorderRadius.circular(12),
+      
+      child: InkWell(
+        // Action when the card is pressed.
+        onTap: () {
+          // Display the SnackBar message when the card is pressed.
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(content: Text("You have pressed the ${item.name} button!"))
+            );
+        },
+        // Container to store the Icon and Text
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          child: Center(
+            child: Column(
+              // Place the Icon and Text in the center of the card.
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  item.icon,
+                  color: Colors.white,
+                  size: 30.0,
+                ),
+                const Padding(padding: EdgeInsets.all(3)),
+                Text(
+                  item.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+...
+```
+
+8. Next, to integrate and display all the cards on the ```HomePage```, change the ```Widget build()``` section in ```MyHomePage``` class.
+```
+...
+class MyHomePage extends StatelessWidget {
+  ...  
+  @override
+  Widget build(BuildContext context) {
+    // Scaffold provides the basic structure of the page with the AppBar and body.
+    return Scaffold(
+      // AppBar is the top part of the page that displays the title.
+      appBar: AppBar(
+        // The title of the application with white text and bold font.
+        title: const Text(
+          'Study Together With Notes',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        // The background color of the AppBar is obtained from the application theme color scheme.
+        backgroundColor: Theme.of(context).colorScheme.primary,
+      ),
+      // Body of the page with paddings around it.
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        // Place the widget vertically in a column.
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Row to display 3 InfoCard horizontally.
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InfoCard(title: 'NPM', content: npm),
+                InfoCard(title: 'Name', content: name),
+                InfoCard(title: 'Class', content: className),
+              ],
+            ),
+
+            // Give a vertical space of 16 units.
+            const SizedBox(height: 16.0),
+
+            // Place the following widget in the center of the page.
+            Center(
+              child: Column(
+                // Place the text and grid item vertically.
+
+                children: [
+                  // Display the welcome message with bold font and size 18.
+                  const Padding(
+                    padding: EdgeInsets.only(top: 16.0),
+                    child: Text(
+                      'Welcome to Study Together with Notes',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ),
+
+                  // Grid to display ItemCard in a 3 column grid.
+                  GridView.count(
+                    primary: true,
+                    padding: const EdgeInsets.all(20),
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    crossAxisCount: 3,
+                    // To ensure that the grid fits its height.
+                    shrinkWrap: true,
+
+                    // Display ItemCard for each item in the items list.
+                    children: items.map((ItemHomepage item) {
+                      return ItemCard(item);
+                    }).toList(),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+...
+```
+
+9. To implement different colors for each buttons (```View Product List```, ```Add Product```, ```Logout```), add a ```color``` property to ```ItemHomepage``` class to represent each item's unique color. Then, in ```ItemCard``` widget, add a line of code to assign ```item.color``` for the background color. Next, in ```MyHomePage``` items list, add unique colors to each item so that each buttons have different colors.
+```
+class ItemHomepage {
+...
+final Color color; 
+...
+
+```
+```
+class ItemCard extends StatelessWidget {
+...
+  @override
+    Widget build(BuildContext context) {
+      return Material(
+        color: item.color,
+...
+```
+```
+class MyHomePage extends StatelessWidget {
+...
+  final List<ItemHomepage> items = [
+      ItemHomepage("View Product List", Icons.mood, Colors.teal),
+      ItemHomepage("Add Product", Icons.add, Colors.green),
+      ItemHomepage("Logout", Icons.logout, Colors.deepOrange),
+    ];
+...
+```
 </details>
 
