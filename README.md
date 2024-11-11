@@ -322,3 +322,101 @@ class MyHomePage extends StatelessWidget {
 ```
 </details>
 
+### Assignment 8
+
+<details>
+  <summary>What is the purpose of const in Flutter? Explain the advantages of using const in Flutter code. When should we use const, and when should it not be used?</summary>
+
+  ##### The use of ```const``` keyword is to serve as an indicator that tells the compiler that "for this variable, it will never change, so create one copy of it and wherever it's mentioned, reference back to the copy." Using ```const``` in Flutter can enhance the application's performance and efficiency - it results in faster, smoother, and more memory-efficient apps since it allows Flutter to reuse the existing object instead of creating a new one. Employing ```const``` shines in immutable data objects, pre-defined values, and optimizing widget trees. It is best to avoid const, if an object's data needs to be modified after creation or object's fetched data is from an external source.
+</details>
+
+<details>
+  <summary>Explain and compare the usage of Column and Row in Flutter. Provide example implementations of each layout widget!</summary>
+
+  ##### Column widget is used to arrange widgets vertically and Row widget is used to arrange widgets horizontally. Column widget arranges its children vertically, so is often used to stack widgets from top to bottom, such as text labels, buttons, or images in a single column. Row widget arranges its children horizontally and is used to display widgets side by side, such as text or buttons in a single row.
+```
+// Example of Column Implementation
+... 
+  child: Column(
+    // Place the Icon and Text in the center of the card.
+    mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+        item.icon,
+        color: Colors.white,
+        size: 30.0,
+        ),
+        const Padding(padding: EdgeInsets.all(3)),
+        Text(
+          item.name,
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: Colors.white),
+        ),
+      ],
+    ),
+...
+```
+```
+// Example of Row Implementation
+...
+  children: [
+    // Row to display 3 InfoCard horizontally.
+    Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        InfoCard(title: 'NPM', content: npm),
+        InfoCard(title: 'Name', content: name),
+        InfoCard(title: 'Class', content: className),
+      ],
+    ),
+... 
+```
+</details>
+
+<details>
+  <summary>List the input elements you used on the form page in this assignment. Are there other Flutter input elements you didn’t use in this assignment? Explain!</summary>
+
+  ##### Input elements that are used are ```TextFormField``` for text inputs in fields such as name, subject, description, and price, and ```ElevatedButton``` used as a submit button to save the form data. Some other Flutter input elements that aren't used in the form are: checkbox (used for binary choices), Switch (used for toggles) and Radio (allows users to select one optino from multiple choices).
+</details>
+
+<details>
+  <summary>How do you set the theme within a Flutter application to ensure consistency? Did you implement a theme in your application?</summary>
+
+  ##### It is possible to set the theme by defining the theme in ```MaterialApp``` by adding the ```theme``` property to ```MaterialApp```, or use theme in widgets to ensure consistency by referencing ```Theme.of(context)```. In my application, it uses both.
+```
+theme: ThemeData(
+  colorScheme: ColorScheme.fromSwatch(
+    primarySwatch: Colors.teal,
+  ).copyWith(secondary: Colors.teal[200]),
+),
+```
+```
+decoration: BoxDecoration(
+  color: Theme.of(context).colorScheme.primary,
+),
+```
+</details>
+
+<details>
+  <summary>How do you manage navigation in a multi-page Flutter application?</summary>
+
+  ##### Navigation is managed using Flutter's ```Navigation```, which allows you to push and pop routes (screens) onto and off of the navigation stack. Routes are often defined by ```MaterialPageRoute``` or by name routes. 
+```
+ListTile(
+  leading: const Icon(Icons.home_outlined),
+  title: const Text('Home Page'),
+  // Redirection part to MyHomePage
+  onTap: () {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MyHomePage(),
+      ));
+    },
+),
+```
+
+</details>
+
+
+
