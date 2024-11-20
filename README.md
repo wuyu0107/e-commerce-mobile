@@ -418,5 +418,43 @@ ListTile(
 
 </details>
 
+### Assignment 9
+
+<details>
+  <summary>Explain why we need to create a model to retrieve or send JSON data. Will an error occur if we don't create a model first?</summary>
+
+  ##### Creating a model to retrieve or send JSON data provides structure and consistency when handling complex data. An error may not occur if you handle the JSON directly using Map<String, dynamic> types, but it makes the code error-prone and harder to maintain.
+</details>
+
+<details>
+  <summary>Explain the function of the http library that you implemented for this task.</summary>
+
+  ##### The http library facilitates network requests to interact with APIs. It provides tools to send request, handles responses, and handle errors. It is crucial for sending GET requests to the Django backend to fetch product data as JSON.
+</details>
+
+<details>
+  <summary>Explain the function of CookieRequest and why it’s necessary to share the CookieRequest instance with all components in the Flutter app.</summary>
+
+  ##### The CookieRequest class manages sessions and cookies for authentication in Flutter apps. It allows session persistence, state management, and cross-component usage. 
+</details>
+
+<details>
+  <summary>Explain the mechanism of data transmission, from input to display in Flutter.</summary>
+
+  ##### The user inputs data via TextFormField, and Flutter validates the input using Form and GlobalKey<FormState>. The data is then packages into a request, and set to the backend using http or CookieRequest. The Django receieves the request, processes the data, and sends a JSON response. The response is received in Flutter, deserialized into models, and passed to widgets for rendering.Flutter’s UI is updated using widgets like FutureBuilder or ListView.builder to present the processed data to the user.
+</details>
+
+<details>
+  <summary>Explain the authentication mechanism from login, register, to logout. Start from inputting account data in Flutter to Django’s completion of the authentication process and display of the menu in Flutter.</summary>
+
+  ##### For login:
+  User enters credentials (username and password). Data is sent to Django's /login/ endpoint via POST.Django checks the credentials against the database. If the credentials are valid, a session cookie is created and returned. CookieRequest stores the session cookie, and enabling subsequent authenticated requests. Then if the login is successful, the app navigates to the homepage. 
+
+  ##### For registration
+  User fills in registration details, then the data is sent to Django's /register/ endpoint. Django validates that data and creates a new user.
+
+  ##### For logout
+  User clicks on the logout button, which sends a POST request to Django's /logout/ endpoint. Django clears the session and invalidates the session cookie. The CookieRequest removes the session cookie, and the app navigates back to the login screen
+</details>
 
 
