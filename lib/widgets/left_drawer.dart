@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:e_commerce/screens/menu.dart';
 import 'package:e_commerce/screens/productentry_form.dart';
+import 'package:e_commerce/screens/list_product.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -51,8 +52,21 @@ class LeftDrawer extends StatelessWidget {
             leading: const Icon(Icons.note_add),
             title: const Text('Add Note Entry'),
             onTap: () {
-              Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => ProductEntryFormPage()));
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProductEntryFormPage()));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add_reaction_rounded),
+            title: const Text('Product List'),
+            onTap: () {
+              // Route to the mood page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProductEntryPage()),
+              );
             },
           ),
         ],
@@ -60,6 +74,3 @@ class LeftDrawer extends StatelessWidget {
     );
   }
 }
-
-
-
